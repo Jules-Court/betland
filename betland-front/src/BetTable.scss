@@ -1,5 +1,8 @@
 /* BetTable.scss */
+html{
+  background-color: #f5f1e6; /* Couleur de fond blanc beige */
 
+}
 .bet-row {
     &.win {
       background-color: rgba(0, 255, 0, 0.1); /* Vert avec opacité */
@@ -9,4 +12,51 @@
       background-color: rgba(255, 0, 0, 0.1); /* Rouge avec opacité */
     }
   }
+
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    max-width: 90%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
   
+    h2 {
+      margin-bottom: 20px;
+    }
+  
+    .MuiFormControl-root {
+      margin-top: 15px;
+    }
+  
+    .MuiButton-root {
+      margin-top: 20px;
+    }
+  }  
+  
+
+  .table-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .bet-row {
+    cursor: pointer;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  
+    button {
+      margin: 0 5px;
+    }
+  }

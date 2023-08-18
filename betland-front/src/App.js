@@ -149,6 +149,13 @@ const App = () => {
             value={simpleBet.odds}
             onChange={handleSimpleChange}
           />
+          <TextField
+            label="Commentaire"
+            variant="outlined"
+            fullWidth
+            name="comments"
+            onChange={handleSimpleChange}
+          />
           <FormControl fullWidth>
             <Select
               label="Statut"
