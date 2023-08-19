@@ -9,6 +9,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import BetTable from './BetTable';
 import axios from 'axios';
+import {Pie} from './Pie'
 
 const App = () => {
   const [isSimpleModalOpen, setIsSimpleModalOpen] = useState(false);
@@ -21,7 +22,6 @@ const App = () => {
     status: null,
   });
   const [bets, setBets] = useState([]);
-  const [initialStake, setInitialStake] = useState('');
 
   useEffect(() => {
     axios.get('http://localhost:8080/')
@@ -102,18 +102,24 @@ const App = () => {
     }, 0);
     return totalProfit.toFixed(2);
   };
+  const winCount = bets.filter(bet => bet.status === 'win').length;
+  const loseCount = bets.filter(bet => bet.status === 'lose').length;
+
 
   return (
     <div className="app-container">
       <div className="header">
-        <div className="placeholder">
-          <p>Mise initial: 50€</p>
-          <p>Bénéfices Totaux:</p>
+        <div className="center">
+          <div className="placeholder">
+            <p>Mise initial: 50€</p>
+            <p>Bénéfices : {calculateTotalProfit()}€</p>
+          </div>
+          <div className="values">
+            <p>Il reste {parseFloat(50) + parseFloat(calculateTotalProfit())}€</p>
+          </div>
         </div>
-        <div className="values">
-          <p>{initialStake}</p>
-          <p>{calculateTotalProfit()}</p>
-          <p>Il reste {parseFloat(50) + parseFloat(calculateTotalProfit())}€</p>
+        <div className='right'>         
+          <Pie winCount={winCount} loseCount={loseCount} />
         </div>
       </div>
       <div className="buttons">
@@ -121,6 +127,7 @@ const App = () => {
       </div>
 
       <BetTable bets={bets} onEdit={openEditModal} />
+
 
       <Modal open={isSimpleModalOpen || isEditModalOpen} onClose={closeSimpleModal}>
         <Box className="modal">
