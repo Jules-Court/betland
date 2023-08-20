@@ -9,7 +9,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import BetTable from './BetTable';
 import axios from 'axios';
-import {Pie} from './Pie'
+import { Pie } from './Pie';
 
 const App = () => {
   const [isSimpleModalOpen, setIsSimpleModalOpen] = useState(false);
@@ -22,6 +22,7 @@ const App = () => {
     status: null,
   });
   const [bets, setBets] = useState([]);
+  const [showPie, setShowPie] = useState(true);
 
   useEffect(() => {
     axios.get('http://localhost:8080/')
@@ -84,8 +85,8 @@ const App = () => {
     axios.post('/', newBet)
       .then(response => {
         console.log('Pari ajouté avec succès :', response.data);
-        setBets([...bets, newBet]); // Mettez à jour la liste des paris localement
-        closeSimpleModal(); // Fermez la modal
+        setBets([...bets, newBet]);
+        closeSimpleModal();
       })
       .catch(error => {
         console.error('Erreur lors de l\'ajout du pari :', error);
@@ -102,9 +103,9 @@ const App = () => {
     }, 0);
     return totalProfit.toFixed(2);
   };
+
   const winCount = bets.filter(bet => bet.status === 'win').length;
   const loseCount = bets.filter(bet => bet.status === 'lose').length;
-
 
   return (
     <div className="app-container">
@@ -118,8 +119,14 @@ const App = () => {
             <p>Il reste {parseFloat(50) + parseFloat(calculateTotalProfit())}€</p>
           </div>
         </div>
-        <div className='right'>         
-          <Pie winCount={winCount} loseCount={loseCount} />
+        <div className='right'>
+          <Button
+            variant="contained"
+            onClick={() => setShowPie(!showPie)}
+          >
+            {showPie ? '▲' : ' ▼'}
+          </Button>
+          {showPie && <Pie winCount={winCount} loseCount={loseCount} />}
         </div>
       </div>
       <div className="buttons">
@@ -127,7 +134,6 @@ const App = () => {
       </div>
 
       <BetTable bets={bets} onEdit={openEditModal} />
-
 
       <Modal open={isSimpleModalOpen || isEditModalOpen} onClose={closeSimpleModal}>
         <Box className="modal">
@@ -156,13 +162,14 @@ const App = () => {
             value={simpleBet.odds}
             onChange={handleSimpleChange}
           />
-          <TextField
+            <TextField
             label="Commentaire"
             variant="outlined"
             fullWidth
             name="comments"
             onChange={handleSimpleChange}
           />
+
           <FormControl fullWidth>
             <Select
               label="Statut"

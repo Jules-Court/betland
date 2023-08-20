@@ -70,7 +70,7 @@ const BetTable = ({ bets, onEdit }) => {
               <TableCell>{bet.status}</TableCell>
               <TableCell>{calculateProfit(bet)}</TableCell>
               <TableCell>
-                <Button variant="outlined" onClick={() => onEdit(index)}>
+                <Button variant="outlined" onClick={() => onEdit(index)} disabled>
                   Modifier
                 </Button>
               </TableCell>
